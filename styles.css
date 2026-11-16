@@ -2001,7 +2001,8 @@ dialog::backdrop {
   max-height: calc(100dvh - 2rem);
   margin: auto;
   border-radius: 28px;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   box-shadow: var(--shadow-lg);
 }
 
@@ -2009,14 +2010,31 @@ dialog::backdrop {
   animation: modalIn 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
+@media (min-width: 981px) {
+  .checkout-dialog {
+    height: min(760px, calc(100dvh - 2rem));
+    overflow: hidden;
+  }
+
+  .checkout-form {
+    height: 100%;
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .checkout-main,
+  .checkout-summary {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
 .checkout-form {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.75fr);
-  max-height: calc(100dvh - 2rem);
 }
 
 .checkout-main {
-  overflow-y: auto;
   padding: 1.9rem 2rem 2.2rem;
 }
 
@@ -2360,7 +2378,6 @@ dialog::backdrop {
   padding: 1.9rem 1.7rem 2rem;
   background: var(--bg-deep);
   border-left: 1px solid var(--line);
-  overflow-y: auto;
 }
 
 .checkout-summary > h3 {
@@ -2748,17 +2765,11 @@ dialog::backdrop {
 
   .checkout-form {
     grid-template-columns: 1fr;
-    overflow-y: auto;
-  }
-
-  .checkout-main {
-    overflow: visible;
   }
 
   .checkout-summary {
     border-left: 0;
     border-top: 1px solid var(--line);
-    overflow: visible;
   }
 
   .checkout-summary .sum-rows {
@@ -2929,10 +2940,6 @@ dialog::backdrop {
     width: calc(100vw - 1rem);
     max-height: calc(100dvh - 1rem);
     border-radius: 22px;
-  }
-
-  .checkout-form {
-    max-height: calc(100dvh - 1rem);
   }
 
   .checkout-main {
