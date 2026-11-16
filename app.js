@@ -2,12 +2,34 @@
   "use strict";
 
   const CART_KEY = "smak-sallskap-cart-v1";
+  const ORDER_KEY = "smak-sallskap-order-v1";
   const FREE_DELIVERY_LIMIT = 500;
   const DELIVERY_FEE = 39;
+  const ORDER_STEP_DELAYS = [0, 15000, 45000, 90000];
+  const ORDER_STEPS = {
+    hamta: [
+      { id: "mottagen", label: "Mottagen", description: "Vi har tagit emot din beställning." },
+      { id: "tillagas", label: "Tillagas", description: "Köket har börjat laga din mat." },
+      { id: "klar", label: "Klar att hämta", description: "Din beställning väntar på Kanalgatan 8." },
+      { id: "avhamtad", label: "Avhämtad", description: "Beställningen är avhämtad. Välkommen åter!" }
+    ],
+    leverans: [
+      { id: "mottagen", label: "Mottagen", description: "Vi har tagit emot din beställning." },
+      { id: "tillagas", label: "Tillagas", description: "Köket har börjat laga din mat." },
+      { id: "utkoring", label: "På väg", description: "Budet är på väg till din adress." },
+      { id: "levererad", label: "Levererad", description: "Beställningen är levererad. Smaklig måltid!" }
+    ]
+  };
+  const METHOD_LABELS = {
+    swish: "Swish",
+    kort: "Betalkort",
+    faktura: "Faktura"
+  };
 
   const CATEGORY_MAP = new Map(CATEGORIES.map((category) => [category.id, category]));
   const MENU_MAP = new Map(MENU.map((item) => [item.id, item]));
   const krFormatter = new Intl.NumberFormat("sv-SE");
+  const timeFormatter = new Intl.DateTimeFormat("sv-SE", { hour: "2-digit", minute: "2-digit" });
 
   const ICONS = {
     star: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9L12 3.5z"></path></svg>',
@@ -22,6 +44,7 @@
     header: document.querySelector(".site-header"),
     navToggle: document.getElementById("nav-toggle"),
     mainNav: document.getElementById("main-nav"),
+    navOrder: document.getElementById("nav-order"),
     openCart: document.getElementById("open-cart"),
     cartCount: document.getElementById("cart-count"),
     grid: document.getElementById("dish-grid"),
@@ -55,16 +78,34 @@
     confirmPay: document.getElementById("confirm-pay"),
     confirmTotal: document.getElementById("confirm-total"),
     confirmClose: document.getElementById("confirm-close"),
+    confirmTrack: document.getElementById("confirm-track"),
+    confirmStatusLabel: document.getElementById("confirm-status-label"),
+    confirmStatusText: document.getElementById("confirm-status-text"),
+    orderDialog: document.getElementById("order-dialog"),
+    orderNumber: document.getElementById("order-number"),
+    orderPill: document.getElementById("order-pill"),
+    orderStatusText: document.getElementById("order-status-text"),
+    orderSteps: document.getElementById("order-steps"),
+    orderPlaced: document.getElementById("order-placed"),
+    orderMethod: document.getElementById("order-method"),
+    orderTime: document.getElementById("order-time"),
+    orderPayment: document.getElementById("order-payment"),
+    orderItems: document.getElementById("order-items"),
+    orderFeeRow: document.getElementById("order-fee-row"),
+    orderFee: document.getElementById("order-fee"),
+    orderTotal: document.getElementById("order-total"),
     year: document.getElementById("year")
   };
 
   let currentDish = null;
   let detailQty = 1;
+  let orderTicker = null;
 
   const state = {
     category: "alla",
     query: "",
-    cart: loadCart()
+    cart: loadCart(),
+    order: loadOrder()
   };
 
   init();
@@ -76,12 +117,14 @@
     updateCartBadge(false);
     updatePaymentUI(activePayment());
     updateFulfillmentUI();
+    renderOrderAccess();
     bindFallbacks(document);
     initHeader();
     initReveal();
     bindMenuControls();
     bindCart();
     bindCheckout();
+    bindOrderStatus();
     bindDialogs();
     els.year.textContent = String(new Date().getFullYear());
   }
@@ -106,6 +149,48 @@
   function saveCart() {
     try {
       window.localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
+    } catch (error) {
+      return;
+    }
+  }
+
+  function loadOrder() {
+    try {
+      const raw = window.localStorage.getItem(ORDER_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return null;
+      if (typeof parsed.orderNumber !== "string") return null;
+      if (!Array.isArray(parsed.items)) return null;
+
+      const items = parsed.items
+        .filter((entry) => entry && MENU_MAP.has(entry.id))
+        .map((entry) => ({
+          id: entry.id,
+          qty: Math.min(99, Math.max(1, Math.round(Number(entry.qty) || 1)))
+        }));
+
+      if (!items.length) return null;
+
+      return {
+        ...parsed,
+        items,
+        mode: parsed.mode === "leverans" ? "leverans" : "hamta",
+        method: Object.prototype.hasOwnProperty.call(METHOD_LABELS, parsed.method) ? parsed.method : "swish",
+        total: Math.max(0, Number(parsed.total) || 0),
+        fee: Math.max(0, Number(parsed.fee) || 0),
+        createdAt: Number(parsed.createdAt) || Date.now(),
+        timeLabel: typeof parsed.timeLabel === "string" ? parsed.timeLabel : "Så snart som möjligt",
+        address: typeof parsed.address === "string" ? parsed.address : ""
+      };
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveOrder(order) {
+    try {
+      window.localStorage.setItem(ORDER_KEY, JSON.stringify(order));
     } catch (error) {
       return;
     }
@@ -713,6 +798,7 @@
     const fee = mode === "leverans" ? (subtotal >= FREE_DELIVERY_LIMIT ? 0 : DELIVERY_FEE) : 0;
     const timeSelect = document.getElementById("co-time");
     const timeOption = timeSelect.selectedOptions[0];
+    const items = state.cart.map((entry) => ({ id: entry.id, qty: entry.qty }));
     const address = mode === "leverans"
       ? [
           document.getElementById("co-address").value.trim(),
@@ -731,6 +817,10 @@
       method,
       mode,
       total: subtotal + fee,
+      subtotal,
+      fee,
+      items,
+      createdAt: Date.now(),
       email: document.getElementById("co-email").value.trim(),
       phone: document.getElementById("co-phone").value.trim(),
       swishPhone: document.getElementById("swish-phone").value.trim(),
@@ -781,24 +871,35 @@
   }
 
   function completeOrder(order) {
-    const methodLabels = {
-      swish: "Swish",
-      kort: "Betalkort",
-      faktura: "Faktura"
-    };
     const messages = {
       swish: `En betalningsbegäran är skickad till ${order.swishPhone}. Din order förbereds så snart betalningen är bekräftad.`,
       kort: `Betalningen är genomförd och en orderbekräftelse skickas till ${order.email}.`,
       faktura: `Fakturan skickas till ${order.invoiceEmail || order.email} med 30 dagars betalningsvillkor.`
     };
 
+    state.order = {
+      orderNumber: order.orderNumber,
+      createdAt: order.createdAt,
+      method: order.method,
+      mode: order.mode,
+      total: order.total,
+      subtotal: order.subtotal,
+      fee: order.fee,
+      items: order.items,
+      address: order.mode === "leverans" ? order.address : "",
+      timeLabel: order.timeLabel
+    };
+    saveOrder(state.order);
+    renderOrderAccess();
+
     els.confirmText.textContent = messages[order.method] || messages.swish;
     els.confirmOrderNo.textContent = order.orderNumber;
     els.confirmTime.textContent = order.timeLabel;
     els.confirmMethod.textContent =
       order.mode === "leverans" ? `Leverans · ${order.address}` : "Hämtning · Kanalgatan 8";
-    els.confirmPay.textContent = methodLabels[order.method] || "Swish";
+    els.confirmPay.textContent = METHOD_LABELS[order.method] || "Swish";
     els.confirmTotal.textContent = formatKr(order.total);
+    renderConfirmStatus();
 
     if (els.checkoutDialog.open) els.checkoutDialog.close();
     els.confirmDialog.showModal();
@@ -808,6 +909,106 @@
     renderCart();
     updateCartBadge(false);
     resetCheckout();
+  }
+
+  function getOrderProgress(order) {
+    const steps = ORDER_STEPS[order.mode] || ORDER_STEPS.hamta;
+    const elapsed = Math.max(0, Date.now() - order.createdAt);
+    let index = 0;
+    ORDER_STEP_DELAYS.forEach((delay, stepIndex) => {
+      if (elapsed >= delay) index = stepIndex;
+    });
+    return { steps, index, current: steps[index] };
+  }
+
+  function renderOrderAccess() {
+    els.navOrder.hidden = !state.order;
+    if (!state.order) return;
+    const progress = getOrderProgress(state.order);
+    els.navOrder.dataset.status = progress.current.id;
+    els.navOrder.setAttribute(
+      "aria-label",
+      `Min beställning ${state.order.orderNumber}: ${progress.current.label}`
+    );
+  }
+
+  function renderConfirmStatus() {
+    if (!state.order) return;
+    const progress = getOrderProgress(state.order);
+    els.confirmStatusLabel.textContent = progress.current.label;
+    els.confirmStatusText.textContent = progress.current.description;
+  }
+
+  function renderOrderStatus() {
+    if (!state.order) return;
+    const order = state.order;
+    const progress = getOrderProgress(order);
+
+    els.orderNumber.textContent = order.orderNumber;
+    els.orderPill.textContent = progress.current.label;
+    els.orderPill.dataset.status = progress.current.id;
+    els.orderStatusText.textContent = progress.current.description;
+    els.orderPlaced.textContent = timeFormatter.format(new Date(order.createdAt));
+    els.orderMethod.textContent = order.mode === "leverans"
+      ? `Hemleverans · ${order.address}`
+      : "Hämtning · Kanalgatan 8";
+    els.orderTime.textContent = order.timeLabel;
+    els.orderPayment.textContent = METHOD_LABELS[order.method] || "Swish";
+
+    els.orderSteps.innerHTML = progress.steps.map((step, index) => {
+      const stepState = index < progress.index ? "is-done" : index === progress.index ? "is-current" : "";
+      const marker = index < progress.index ? ICONS.check : String(index + 1);
+      const current = index === progress.index ? ' aria-current="step"' : "";
+      return `<li class="order-step${stepState ? ` ${stepState}` : ""}"${current}>
+        <span class="order-step-marker" aria-hidden="true">${marker}</span>
+        <div><strong>${escapeHtml(step.label)}</strong><small>${escapeHtml(step.description)}</small></div>
+      </li>`;
+    }).join("");
+
+    const items = order.items
+      .map((line) => ({ ...line, item: MENU_MAP.get(line.id) }))
+      .filter((line) => line.item);
+
+    els.orderItems.innerHTML = items.map((line) => `<div class="order-line">
+      <span><strong>${line.qty} ×</strong> ${escapeHtml(line.item.name)}</span>
+      <span>${formatKr(line.item.price * line.qty)}</span>
+    </div>`).join("");
+    els.orderFeeRow.hidden = order.mode !== "leverans";
+    els.orderFee.textContent = order.fee > 0 ? formatKr(order.fee) : "Fri";
+    els.orderTotal.textContent = formatKr(order.total);
+    renderOrderAccess();
+  }
+
+  function openOrderStatus() {
+    if (!state.order) {
+      showToast("Ingen aktiv beställning hittades.");
+      return;
+    }
+    renderOrderStatus();
+    if (!els.orderDialog.open) els.orderDialog.showModal();
+    window.clearInterval(orderTicker);
+    orderTicker = window.setInterval(() => {
+      renderOrderStatus();
+      renderConfirmStatus();
+    }, 4000);
+  }
+
+  function bindOrderStatus() {
+    els.navOrder.addEventListener("click", () => {
+      closeNav();
+      openOrderStatus();
+    });
+
+    els.confirmTrack.addEventListener("click", () => {
+      if (els.confirmDialog.open) els.confirmDialog.close();
+      openOrderStatus();
+    });
+
+    els.orderDialog.addEventListener("close", () => {
+      if (!orderTicker) return;
+      window.clearInterval(orderTicker);
+      orderTicker = null;
+    });
   }
 
   function resetCheckout() {
@@ -878,11 +1079,17 @@
       if (dialog && dialog.open) dialog.close();
     });
 
-    [els.cartDialog, els.checkoutDialog, els.confirmDialog].forEach((dialog) => {
+    [els.cartDialog, els.checkoutDialog, els.confirmDialog, els.orderDialog].forEach((dialog) => {
       dialog.addEventListener("click", (event) => {
         if (event.target === dialog) dialog.close();
       });
     });
+  }
+
+  function closeNav() {
+    els.header.classList.remove("nav-open");
+    els.navToggle.setAttribute("aria-expanded", "false");
+    els.navToggle.setAttribute("aria-label", "Öppna meny");
   }
 
   function initHeader() {
@@ -891,12 +1098,6 @@
     };
     updateHeader();
     window.addEventListener("scroll", updateHeader, { passive: true });
-
-    const closeNav = () => {
-      els.header.classList.remove("nav-open");
-      els.navToggle.setAttribute("aria-expanded", "false");
-      els.navToggle.setAttribute("aria-label", "Öppna meny");
-    };
 
     els.navToggle.addEventListener("click", () => {
       const isOpen = els.header.classList.toggle("nav-open");

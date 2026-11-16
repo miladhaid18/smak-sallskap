@@ -34,6 +34,10 @@
       <nav class="main-nav" id="main-nav" aria-label="Huvudnavigation">
         <a href="#meny">Meny</a>
         <a href="#sa-funkar-det">Beställa</a>
+        <button class="nav-order" id="nav-order" type="button" aria-haspopup="dialog" aria-controls="order-dialog" hidden>
+          Min beställning
+          <span class="nav-order-dot" aria-hidden="true"></span>
+        </button>
         <a href="#om-oss">Om oss</a>
         <a href="#kontakt">Kontakt</a>
       </nav>
@@ -157,7 +161,7 @@
           <article class="step" data-reveal>
             <span class="step-no">03</span>
             <h3>Betala tryggt</h3>
-            <p>Godkänn betalningen med Swish, kort eller välj faktura med 30 dagars betalningsvillkor. Du får en orderbekräftelse direkt.</p>
+            <p>Godkänn betalningen med Swish, kort eller välj faktura med 30 dagars betalningsvillkor. Du får en orderbekräftelse direkt och kan följa din beställning under Min beställning.</p>
           </article>
         </div>
 
@@ -494,6 +498,13 @@
       <p class="eyebrow">Orderbekräftelse</p>
       <h2 id="confirm-title">Tack för din beställning!</h2>
       <p class="confirm-text" id="confirm-text"></p>
+      <div class="confirm-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <div class="confirm-status-copy">
+          <strong id="confirm-status-label">Mottagen</strong>
+          <span id="confirm-status-text" aria-live="polite">Vi har tagit emot din beställning.</span>
+        </div>
+      </div>
       <div class="confirm-order">
         <div><span>Ordernummer</span><strong id="confirm-order-no">SS-000000</strong></div>
         <div><span>Önskad tid</span><strong id="confirm-time">Så snart som möjligt</strong></div>
@@ -501,8 +512,42 @@
         <div><span>Betalning</span><strong id="confirm-pay">Swish</strong></div>
         <div class="confirm-total-row"><span>Totalt</span><strong id="confirm-total">0 kr</strong></div>
       </div>
-      <button class="btn btn-dark btn-block" id="confirm-close" type="button">Tillbaka till menyn</button>
+      <button class="btn btn-primary btn-block" id="confirm-track" type="button">Följ din beställning</button>
+      <button class="link-btn confirm-menu-link" id="confirm-close" type="button">Tillbaka till menyn</button>
       <p class="confirm-demo">Demoläge – ingen riktig betalning har genomförts.</p>
+    </div>
+  </dialog>
+
+  <dialog class="order-dialog" id="order-dialog" aria-labelledby="order-title">
+    <div class="order-card">
+      <button class="dialog-close" type="button" data-close-dialog aria-label="Stäng orderstatus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+      </button>
+      <p class="eyebrow">Din beställning</p>
+      <div class="order-heading">
+        <div>
+          <h2 id="order-title">Orderstatus</h2>
+          <p class="order-number" id="order-number">SS-000000</p>
+        </div>
+        <span class="order-pill" id="order-pill">Mottagen</span>
+      </div>
+      <p class="order-status-text" id="order-status-text" aria-live="polite">Vi har tagit emot din beställning.</p>
+
+      <ol class="order-steps" id="order-steps"></ol>
+
+      <div class="order-info">
+        <div><span>Beställd</span><strong id="order-placed">--:--</strong></div>
+        <div><span>Leverans</span><strong id="order-method">Hämtning · Kanalgatan 8</strong></div>
+        <div><span>Önskad tid</span><strong id="order-time">Så snart som möjligt</strong></div>
+        <div><span>Betalning</span><strong id="order-payment">Swish</strong></div>
+      </div>
+
+      <h3 class="order-subtitle">Det här beställde du</h3>
+      <div class="order-items" id="order-items"></div>
+      <div class="order-line order-fee-line" id="order-fee-row" hidden><span>Leverans</span><span id="order-fee">39 kr</span></div>
+      <div class="order-total"><span>Totalt</span><strong id="order-total">0 kr</strong></div>
+      <p class="order-demo">Demoläge: statusen simuleras och uppdateras automatiskt.</p>
+      <button class="btn btn-dark btn-block" type="button" data-close-dialog>Stäng</button>
     </div>
   </dialog>
 
