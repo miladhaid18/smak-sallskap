@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smak &amp; Sällskap – Restaurang &amp; bar i Malmö</title>
+  <meta name="description" content="Säsongsbetonat kök med förrätter, huvudrätter, efterrätter, såser och drycker. Beställ online för leverans eller hämta i restaurangen. Betala med Swish, kort eller faktura.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23b34524'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='34' fill='%23f7f1e6'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#meny">Hoppa till menyn</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Smak &amp; Sällskap – startsida">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M14 10v8.5a2.8 2.8 0 0 0 5.6 0V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+            <path d="M16.8 20.5V30" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+            <path d="M25.5 10c-1.7 2.6-2.5 5.2-2.5 7.7 0 2.2 1 3.7 2.5 4.4V30" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">Smak &amp; Sällskap</span>
+          <span class="brand-sub">Restaurang &amp; bar</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Huvudnavigation">
+        <a href="#meny">Meny</a>
+        <a href="#sa-funkar-det">Beställa</a>
+        <a href="#om-oss">Om oss</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-btn" id="open-cart" type="button" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6.6 8.5h10.8l-.8 10.1a2 2 0 0 1-2 1.9H9.4a2 2 0 0 1-2-1.9L6.6 8.5Z"></path>
+            <path d="M9.2 8.5V7a2.8 2.8 0 0 1 5.6 0v1.5"></path>
+          </svg>
+          <span class="cart-btn-label">Varukorg</span>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Öppna meny">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy" data-reveal>
+          <p class="eyebrow">Säsongsbetonat kök · Malmö</p>
+          <h1>Vällagat, <em>välkomnande</em> och bara ett klick bort.</h1>
+          <p class="hero-lead">Från frasiga förrätter till generösa huvudrätter, hemlagade såser och frestelser till efterrätt. Beställ online för leverans eller hämta direkt i restaurangen.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#meny">
+              Beställ mat
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+            </a>
+            <button class="btn btn-ghost" type="button" data-jump="huvudratter">Dagens huvudrätter</button>
+          </div>
+          <div class="hero-stats">
+            <div><strong>4,9<small>/5</small></strong><span>1 200+ gästomdömen</span></div>
+            <div><strong>34</strong><span>rätter, såser &amp; drycker</span></div>
+            <div><strong>25 min</strong><span>snabb leverans</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual" data-reveal>
+          <div class="hero-photo">
+            <img src="images/hero.jpg" alt="Varm och inbjudande restaurangmiljö" width="900" height="1100" fetchpriority="high" data-fallback data-fallback-name="Restaurang">
+          </div>
+          <div class="hero-photo-small">
+            <img src="images/hero-small.jpg" alt="Chokladfondant med varm chokladsås" width="700" height="700" data-fallback data-fallback-name="Dessert">
+          </div>
+          <div class="hero-rating">
+            <span class="hero-rating-star" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9L12 3.5z"></path></svg>
+            </span>
+            <div><strong>4,9 av 5</strong><span>Älskad av våra gäster</span></div>
+          </div>
+          <div class="hero-open"><span class="status-dot"></span> Öppet nu · 11–23</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-section" id="meny">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="eyebrow">Vår meny</p>
+            <h2>Hitta din <em>favorit</em></h2>
+          </div>
+          <p class="section-lead">Klicka på en rätt för att se stor bild, innehåll och allergener. Lägg det du gillar i varukorgen och beställ med Swish, kort eller faktura.</p>
+        </div>
+
+        <div class="menu-toolbar" data-reveal>
+          <div class="tabs" id="category-tabs" role="group" aria-label="Filtrera menyn"></div>
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+            <input id="menu-search" type="search" placeholder="Sök rätt, råvara eller dryck..." aria-label="Sök i menyn" autocomplete="off">
+            <button class="search-clear" id="search-clear" type="button" aria-label="Rensa sökningen" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="results-row" data-reveal>
+          <p id="result-count" aria-live="polite">34 rätter på menyn</p>
+          <p class="delivery-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17.5" cy="18" r="1.6"></circle></svg>
+            Fri leverans över 500 kr
+          </p>
+        </div>
+
+        <div class="dish-grid" id="dish-grid"></div>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <span class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+          </span>
+          <h3>Inga rätter hittades</h3>
+          <p>Prova ett annat sökord eller visa hela menyn igen.</p>
+          <button class="btn btn-dark" id="reset-filters" type="button">Visa hela menyn</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="how" id="sa-funkar-det">
+      <div class="container">
+        <div class="how-head" data-reveal>
+          <p class="eyebrow">Onlinebeställning</p>
+          <h2>Från meny till dörr i tre steg</h2>
+          <p>Välj det du är sugen på, bestäm om du vill hämta eller få maten levererad och betala på det sätt som passar dig bäst.</p>
+        </div>
+
+        <div class="steps">
+          <article class="step" data-reveal>
+            <span class="step-no">01</span>
+            <h3>Välj dina favoriter</h3>
+            <p>Bläddra bland förrätter, huvudrätter, efterrätter, såser och drycker. Klicka på en rätt för att läsa mer och lägg den i varukorgen.</p>
+          </article>
+          <article class="step" data-reveal>
+            <span class="step-no">02</span>
+            <h3>Hämta eller få hem</h3>
+            <p>Välj tid och ange dina uppgifter. Hämta i restaurangen på Kanalgatan 8 eller få maten levererad hem till dörren inom 25–40 minuter.</p>
+          </article>
+          <article class="step" data-reveal>
+            <span class="step-no">03</span>
+            <h3>Betala tryggt</h3>
+            <p>Godkänn betalningen med Swish, kort eller välj faktura med 30 dagars betalningsvillkor. Du får en orderbekräftelse direkt.</p>
+          </article>
+        </div>
+
+        <div class="payment-band" data-reveal>
+          <p>Betala enkelt med</p>
+          <ul>
+            <li class="payment-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h11l-3-3"></path><path d="M19 16H8l3 3"></path></svg>
+              Swish
+            </li>
+            <li class="payment-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2.5"></rect><path d="M3 10h18"></path><path d="M16.5 15h1.5"></path></svg>
+              Betalkort
+            </li>
+            <li class="payment-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v4h4"></path><path d="M10 12h5M10 16h5"></path></svg>
+              Faktura
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="om-oss">
+      <div class="container about-grid">
+        <div class="about-visual" data-reveal>
+          <img src="images/about.jpg" alt="Varm restaurangmiljö med dukade bord och gäster" width="1000" height="600" data-fallback data-fallback-name="Restaurang">
+          <div class="about-card">
+            <strong>Sedan 2014</strong>
+            <span>Lagat från grunden i Malmö</span>
+          </div>
+        </div>
+        <div class="about-copy" data-reveal>
+          <p class="eyebrow">Om oss</p>
+          <h2>Lagat från grunden, serverat med omtanke</h2>
+          <p>Smak &amp; Sällskap är en grannrestaurang där klassiska favoriter möter säsongens råvaror. Allt lagas à la minute, såserna rörs för hand och brödet bakas varje morgon.</p>
+          <ul class="check-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+              Säsongsråvaror från lokala leverantörer
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+              Allt lagas från grunden – inga genvägar
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+              Noggrant utvalda såser, drycker och desserter
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+              Vegetariska och veganska alternativ varje dag
+            </li>
+          </ul>
+          <a class="btn btn-primary" href="#meny">Utforska menyn</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="kontakt">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="eyebrow">Kontakt</p>
+            <h2>Kom förbi eller säg hej</h2>
+          </div>
+          <p class="section-lead">Har du frågor om allergener, beställningar eller större sällskap? Hör av dig – vi svarar oftast inom en timme.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-copy" data-reveal>
+            <div class="contact-cards">
+              <a class="contact-card" href="tel:+46401234567">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.8h3l1.5 4-2 1.4a12 12 0 0 0 5.8 5.8l1.4-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 6a2 2 0 0 1 2-2.2Z"></path></svg>
+                <span>Ring oss<strong>040–123 45 67</strong></span>
+              </a>
+              <a class="contact-card" href="mailto:hej@smakochsallskap.se">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>
+                <span>Mejla oss<strong>hej@smakochsallskap.se</strong></span>
+              </a>
+              <div class="contact-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+                <span>Hitta hit<strong>Kanalgatan 8, Malmö</strong></span>
+              </div>
+            </div>
+            <div class="contact-extra">
+              <p>Onlinebeställning dygnet runt. Köket tar emot beställningar under öppettiderna och levererar inom 40 minuter i centrala Malmö.</p>
+              <div class="contact-tags">
+                <span>Leverans 39 kr</span>
+                <span>Fri över 500 kr</span>
+                <span>Swish · Kort · Faktura</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hours-card" data-reveal>
+            <div class="hours-head">
+              <h3>Öppettider</h3>
+              <span class="open-badge"><span class="status-dot"></span> Öppet nu</span>
+            </div>
+            <dl>
+              <div><dt>Måndag–torsdag</dt><dd>11:00–23:00</dd></div>
+              <div><dt>Fredag</dt><dd>11:00–00:00</dd></div>
+              <div><dt>Lördag</dt><dd>10:00–00:00</dd></div>
+              <div><dt>Söndag</dt><dd>11:00–21:00</dd></div>
+            </dl>
+            <div class="hours-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg>
+              Sista beställning 30 minuter innan stängning.
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand brand-light" href="#top" aria-label="Smak &amp; Sällskap – till toppen">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="1.5"></circle>
+              <path d="M14 10v8.5a2.8 2.8 0 0 0 5.6 0V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+              <path d="M16.8 20.5V30" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+              <path d="M25.5 10c-1.7 2.6-2.5 5.2-2.5 7.7 0 2.2 1 3.7 2.5 4.4V30" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-name">Smak &amp; Sällskap</span>
+            <span class="brand-sub">Restaurang &amp; bar</span>
+          </span>
+        </a>
+        <p>Ärlig mat, generösa portioner och en plats där alla känner sig välkomna. Beställ online eller kom förbi Kanalgatan 8 i Malmö.</p>
+        <ul class="footer-pay">
+          <li>Swish</li>
+          <li>Betalkort</li>
+          <li>Faktura</li>
+        </ul>
+      </div>
+
+      <nav class="footer-links" aria-label="Sidfotsmeny">
+        <h3>Utforska</h3>
+        <a href="#meny">Hela menyn</a>
+        <a href="#sa-funkar-det">Så beställer du</a>
+        <a href="#om-oss">Om oss</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="bilder.html">Bildkällor</a>
+      </nav>
+
+      <div class="footer-contact">
+        <h3>Hör av dig</h3>
+        <a href="tel:+46401234567">040–123 45 67</a>
+        <a href="mailto:hej@smakochsallskap.se">hej@smakochsallskap.se</a>
+        <p>Kanalgatan 8<br>211 40 Malmö</p>
+        <p>Mån–tors 11–23<br>Fre–lör 11–00 · Sön 11–21</p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year">2026</span> Smak &amp; Sällskap. Alla rättigheter förbehållna.</p>
+      <p>Demowebbplats – inga riktiga beställningar eller betalningar genomförs.</p>
+    </div>
+  </footer>
+
+  <dialog class="dish-dialog" id="dish-dialog" aria-labelledby="dish-dialog-title"></dialog>
+
+  <dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title">
+    <div class="cart-head">
+      <div>
+        <p class="eyebrow">Din beställning</p>
+        <h2 id="cart-title">Varukorg</h2>
+      </div>
+      <button class="icon-btn" type="button" data-close-dialog aria-label="Stäng varukorgen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+      </button>
+    </div>
+    <div class="cart-body" id="cart-items"></div>
+    <div class="cart-foot">
+      <div class="cart-subtotal-row"><span>Delsumma</span><strong id="cart-subtotal">0 kr</strong></div>
+      <p class="cart-ship" id="cart-ship"></p>
+      <button class="btn btn-primary btn-block" id="checkout-btn" type="button">
+        Till kassan
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+      </button>
+      <button class="link-btn" id="clear-cart" type="button">Töm varukorgen</button>
+    </div>
+  </dialog>
+
+  <dialog class="checkout-dialog" id="checkout-dialog" aria-labelledby="checkout-title">
+    <form class="checkout-form" id="checkout-form">
+      <div class="checkout-main">
+        <div class="checkout-head">
+          <div>
+            <p class="eyebrow">Kassa</p>
+            <h2 id="checkout-title">Slutför din beställning</h2>
+          </div>
+          <button class="icon-btn" type="button" data-close-dialog aria-label="Stäng kassan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+          </button>
+        </div>
+
+        <section class="form-section">
+          <h3><span>1</span> Kontaktuppgifter</h3>
+          <div class="form-grid">
+            <label class="field"><span>Namn</span><input id="co-name" name="name" autocomplete="name" required minlength="2" placeholder="Anna Andersson"></label>
+            <label class="field"><span>Mobilnummer</span><input id="co-phone" name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ ()-]{7,20}" placeholder="070 123 45 67"></label>
+            <label class="field field-full"><span>E-post</span><input id="co-email" name="email" type="email" autocomplete="email" required placeholder="anna@exempel.se"></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><span>2</span> Leverans</h3>
+          <div class="choice-row" role="radiogroup" aria-label="Välj leveranssätt">
+            <label class="choice">
+              <input type="radio" name="fulfillment" value="hamta" checked>
+              <span><strong>Hämta själv</strong><small>Kanalgatan 8 · ca 20 min</small></span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="fulfillment" value="leverans">
+              <span><strong>Hemleverans</strong><small>39 kr · fri över 500 kr</small></span>
+            </label>
+          </div>
+          <div class="form-grid delivery-fields" id="delivery-fields" hidden>
+            <label class="field field-full"><span>Gatuadress</span><input id="co-address" name="address" autocomplete="street-address" placeholder="Storgatan 1" disabled></label>
+            <label class="field"><span>Postnummer</span><input id="co-zip" name="zip" inputmode="numeric" autocomplete="postal-code" pattern="[0-9 ]{5,6}" placeholder="211 40" disabled></label>
+            <label class="field"><span>Ort</span><input id="co-city" name="city" autocomplete="address-level2" placeholder="Malmö" disabled></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><span>3</span> Önskad tid</h3>
+          <label class="field"><span>När vill du ha din mat?</span>
+            <select id="co-time">
+              <option value="asap">Så snart som möjligt (ca 25 min)</option>
+              <option value="45">Om 45 minuter</option>
+              <option value="60">Om 1 timme</option>
+              <option value="90">Om 1,5 timmar</option>
+              <option value="120">Om 2 timmar</option>
+            </select>
+          </label>
+          <label class="field"><span>Meddelande till köket (valfritt)</span><textarea id="co-note" rows="2" placeholder="Allergier, önskemål eller dörrkod..."></textarea></label>
+        </section>
+
+        <section class="form-section">
+          <h3><span>4</span> Betalningsmetod</h3>
+          <div class="pay-options" role="radiogroup" aria-label="Betalningsmetod">
+            <label class="pay-option">
+              <input type="radio" name="payment" value="swish" checked>
+              <span class="pay-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h11l-3-3"></path><path d="M19 16H8l3 3"></path></svg>
+              </span>
+              <span class="pay-text"><strong>Swish</strong><small>Betala direkt i mobilen</small></span>
+              <span class="pay-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+              </span>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="payment" value="kort">
+              <span class="pay-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"></rect><path d="M3 10h18"></path><path d="M16.5 15h1.5"></path></svg>
+              </span>
+              <span class="pay-text"><strong>Betalkort</strong><small>Visa, Mastercard eller Amex</small></span>
+              <span class="pay-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+              </span>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="payment" value="faktura">
+              <span class="pay-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v4h4"></path><path d="M10 12h5M10 16h5"></path></svg>
+              </span>
+              <span class="pay-text"><strong>Faktura</strong><small>30 dagars betalningsvillkor</small></span>
+              <span class="pay-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+              </span>
+            </label>
+          </div>
+
+          <div class="pay-panel" data-panel="swish">
+            <label class="field"><span>Mobilnummer för Swish</span><input id="swish-phone" type="tel" autocomplete="tel" required pattern="[0-9+ ()-]{7,20}" placeholder="070 123 45 67"></label>
+            <p class="hint">Vi skickar en betalningsbegäran till din Swish-app när du bekräftar ordern.</p>
+          </div>
+
+          <div class="pay-panel" data-panel="kort" hidden>
+            <div class="form-grid">
+              <label class="field field-full"><span>Kortnummer</span><input id="card-number" inputmode="numeric" autocomplete="cc-number" required pattern="[0-9 ]{13,23}" maxlength="23" placeholder="4242 4242 4242 4242"></label>
+              <label class="field"><span>Giltig till</span><input id="card-expiry" inputmode="numeric" autocomplete="cc-exp" required pattern="(0[1-9]|1[0-2])/[0-9]{2}" maxlength="5" placeholder="MM/ÅÅ"></label>
+              <label class="field"><span>CVC</span><input id="card-cvc" inputmode="numeric" autocomplete="cc-csc" required pattern="[0-9]{3,4}" maxlength="4" placeholder="123"></label>
+              <label class="field field-full"><span>Namn på kortet</span><input id="card-name" autocomplete="cc-name" required placeholder="ANNA ANDERSSON"></label>
+            </div>
+            <p class="hint">Uppgifterna krypteras och sparas aldrig i webbläsaren.</p>
+          </div>
+
+          <div class="pay-panel" data-panel="faktura" hidden>
+            <div class="form-grid">
+              <label class="field"><span>Personnummer</span><input id="invoice-ssn" inputmode="numeric" autocomplete="off" required pattern="[0-9]{6,8}[-+]?[0-9]{4}" placeholder="ÅÅMMDD-XXXX"></label>
+              <label class="field"><span>Faktura-e-post</span><input id="invoice-email" type="email" autocomplete="email" required placeholder="faktura@exempel.se"></label>
+            </div>
+            <label class="invoice-terms"><input type="checkbox" id="invoice-terms" required> <span>Jag godkänner kreditprövning och 30 dagars betalningsvillkor.</span></label>
+            <p class="hint">Fakturan skickas via e-post efter godkänd kreditprövning.</p>
+          </div>
+        </section>
+
+        <label class="terms"><input type="checkbox" id="co-terms" required> <span>Jag godkänner beställningsvillkoren och att mina uppgifter hanteras enligt integritetspolicyn.</span></label>
+
+        <p class="demo-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 11v5"></path><path d="M12 8h.01"></path></svg>
+          Detta är en demowebbplats. Inga riktiga beställningar eller betalningar genomförs.
+        </p>
+      </div>
+
+      <aside class="checkout-summary">
+        <h3>Din beställning</h3>
+        <div class="checkout-items" id="checkout-items"></div>
+        <div class="sum-rows">
+          <div><span>Delsumma</span><span id="sum-subtotal">0 kr</span></div>
+          <div><span>Leverans</span><span id="sum-delivery">0 kr</span></div>
+          <div class="sum-total"><span>Totalt</span><strong id="sum-total">0 kr</strong></div>
+        </div>
+        <button class="btn btn-primary btn-block" id="pay-btn" type="submit">Betala med Swish</button>
+        <p class="secure-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"></path></svg>
+          Säker betalning · Swish, kort eller faktura
+        </p>
+      </aside>
+    </form>
+  </dialog>
+
+  <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title">
+    <div class="confirm-card">
+      <span class="confirm-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>
+      </span>
+      <p class="eyebrow">Orderbekräftelse</p>
+      <h2 id="confirm-title">Tack för din beställning!</h2>
+      <p class="confirm-text" id="confirm-text"></p>
+      <div class="confirm-order">
+        <div><span>Ordernummer</span><strong id="confirm-order-no">SS-000000</strong></div>
+        <div><span>Önskad tid</span><strong id="confirm-time">Så snart som möjligt</strong></div>
+        <div><span>Leverans</span><strong id="confirm-method">Hämtning</strong></div>
+        <div><span>Betalning</span><strong id="confirm-pay">Swish</strong></div>
+        <div class="confirm-total-row"><span>Totalt</span><strong id="confirm-total">0 kr</strong></div>
+      </div>
+      <button class="btn btn-dark btn-block" id="confirm-close" type="button">Tillbaka till menyn</button>
+      <p class="confirm-demo">Demoläge – ingen riktig betalning har genomförts.</p>
+    </div>
+  </dialog>
+
+  <div class="toast-stack" id="toast-stack" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
